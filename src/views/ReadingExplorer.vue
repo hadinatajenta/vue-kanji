@@ -60,11 +60,6 @@
                                             <span v-if="kanji.grade">Grade {{ kanji.grade }}</span>
                                             <span v-if="kanji.stroke_count">{{ kanji.stroke_count }} strokes</span>
                                         </div>
-
-                                        <router-link :to="`/dictionary?search=${kanji.character}`"
-                                            class="inline-block bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded text-sm transition-colors focus:outline-none focus:ring-1 focus:ring-red-500">
-                                            View Details
-                                        </router-link>
                                     </div>
                                 </div>
                             </div>
