@@ -1,4 +1,3 @@
-# Vue 3 + Vite
 
 # Vue-Kanji (Vue kamus kanji)
 
