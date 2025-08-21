@@ -3,11 +3,7 @@
         <div class="min-h-screen bg-gradient-to-br from-red-50 to-red-100 py-8">
             <div class="container mx-auto px-4">
                 <!-- Header Section -->
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Kanji Dictionary</h1>
-                    <p class="text-lg text-gray-700">Look up any kanji character to see detailed information and related
-                        vocabulary</p>
-                </div>
+                <HeaderSection title="Kanji Dictionary" subtitle="Look up any kanji character to see detailed information and related vocabulary"/>
 
                 <!-- Search Section -->
                 <SearchSection v-model="searchQuery" :quick-suggestions="quickSuggestions"
@@ -15,26 +11,9 @@
                     button-text="Search" @search="searchKanji" @suggestion-selected="setSuggestion" />
 
                 <!-- Loading State -->
-                <div v-if="loading" class="text-center py-12">
-                    <div class="inline-flex items-center">
-                        <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-red-600" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                        </svg>
-                        <span class="text-lg text-gray-700">Searching...</span>
-                    </div>
-                </div>
+                <Loader :show="loading" message="Searching..." />
+                <ErrorAlert :error="error " />
 
-                <!-- Error State -->
-                <div v-if="error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded"
-                    role="alert">
-                    <p class="font-bold">Error</p>
-                    <p>{{ error }}</p>
-                </div>
 
                 <!-- Kanji Details -->
                 <div v-if="kanjiData" class="mb-8">
@@ -208,6 +187,9 @@ import MainLayout from '../components/layouts/MainLayout.vue'
 import SearchSection from '../components/common/SearchSection.vue'
 import EmptySection from '../components/common/EmptySection.vue'
 import { useHead } from '@vueuse/head'
+import HeaderSection from '../components/common/HeaderSection.vue'
+import Loader from '../components/common/Loader.vue'
+import ErrorAlert from '../components/common/ErrorAlert.vue'
 
 useHead({
   title: 'Vue Kanji | Kanji Dictionary'

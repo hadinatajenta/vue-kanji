@@ -2,14 +2,9 @@
     <MainLayout>
         <div class="min-h-screen bg-gradient-to-br from-red-50 to-red-100 py-8">
             <div class="container mx-auto px-4">
-                <!-- Header Section -->
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Kanji Learning Path</h1>
-                    <p class="text-lg text-gray-700">Systematically learn Japanese kanji through structured progression
-                    </p>
-                </div>
+                <HeaderSection title="Kanji Learning Path"
+                    subtitle="Systematically learn Japanese kanji through structured progression" />
 
-                <!-- Learning Mode Selection -->
                 <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Select Learning Mode</h2>
 
@@ -26,7 +21,6 @@
                         </button>
                     </div>
 
-                    <!-- Level Selection (only show for JLPT and Grade modes) -->
                     <div v-if="activeMode !== 'joyo'" class="mb-6">
                         <h3 class="text-lg font-medium text-gray-800 mb-3">Select Level</h3>
                         <div class="flex flex-wrap gap-2">
@@ -57,26 +51,10 @@
                 </div>
 
                 <!-- Loading State -->
-                <div v-if="loading" class="text-center py-12">
-                    <div class="inline-flex items-center">
-                        <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-red-600" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                        </svg>
-                        <span class="text-lg text-gray-700">Loading kanji...</span>
-                    </div>
-                </div>
+                <Loader :show="loading" message="Loading..." />
 
                 <!-- Error State -->
-                <div v-if="error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded"
-                    role="alert">
-                    <p class="font-bold">Error</p>
-                    <p>{{ error }}</p>
-                </div>
+                <ErrorAlert :error="error" />
 
                 <!-- Kanji Grid -->
                 <div v-if="kanjiList.length > 0" class="mb-8">
@@ -211,23 +189,23 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import MainLayout from '../components/layouts/MainLayout.vue'
 import { useHead } from '@vueuse/head'
+import HeaderSection from '../components/common/HeaderSection.vue'
+import Loader from '../components/common/Loader.vue'
+import ErrorAlert from '../components/common/ErrorAlert.vue'
 
 useHead({
   title: 'Vue Kanji | Learn'
 })
 
-// Learning modes
 const learningModes = ref([
     { id: 'jlpt', label: 'JLPT Level' },
     { id: 'grade', label: 'School Grade' },
     { id: 'joyo', label: 'Jōyō Kanji' }
 ])
 
-// Levels for each mode
 const jlptLevels = ref(['5', '4', '3', '2', '1'])
 const gradeLevels = ref(['1', '2', '3', '4', '5', '6'])
 
-// Reactive state
 const activeMode = ref('jlpt')
 const activeLevel = ref('5')
 const kanjiList = ref([])
@@ -237,7 +215,6 @@ const loading = ref(false)
 const error = ref(null)
 const progress = ref({})
 
-// Computed properties
 const levels = computed(() => {
     return activeMode.value === 'jlpt' ? jlptLevels.value : gradeLevels.value
 })
@@ -295,7 +272,6 @@ const fetchKanjiList = async () => {
 }
 
 const fetchKanjiDetails = async (character) => {
-    // Skip if already fetched
     if (kanjiDetails.value[character]) return
 
     try {

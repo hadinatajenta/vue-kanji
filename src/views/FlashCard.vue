@@ -2,13 +2,8 @@
     <MainLayout>
         <div class="min-h-screen bg-gradient-to-br from-red-50 to-red-100 py-8">
             <div class="container mx-auto px-4">
-                <!-- Header Section -->
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Kanji Flashcards</h1>
-                    <p class="text-lg text-gray-700">Practice and master Japanese kanji with interactive flashcards</p>
-                </div>
+                <HeaderSection title="Kanji Flashcard" subtitle="Practice and master Japanese kanji with interactive flashcards" />
 
-                <!-- Level Selection -->
                 <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Select JLPT Level</h2>
                     <div class="flex flex-wrap gap-3 justify-center">
@@ -178,19 +173,12 @@
                     </div>
                 </div>
 
-                <!-- Empty State -->
-                <div v-if="!loading && !currentKanji && !error" class="text-center py-12">
-                    <div class="bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto">
-                        <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Select a JLPT Level</h2>
-                        <p class="text-gray-600 mb-4">Choose a JLPT level from above to start studying kanji flashcards
-                        </p>
-                    </div>
-                </div>
+                <EmptySection
+                    v-if="!loading && kanjiList.length === 0 && !error"
+                    title="Select a JLPT Level"
+                    description="Choose a JLPT level from above to start studying kanji flashcards"
+                    :quick-suggestions="jlptLevels.map(l => l.value)"
+                />
             </div>
         </div>
     </MainLayout>
@@ -198,11 +186,18 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import MainLayout from '../components/layouts/MainLayout.vue'
 import { useHead } from '@vueuse/head'
+import { toast } from "vue3-toastify"
+import { useKanjiStore } from '../stores/kanji'
+import MainLayout from '../components/layouts/MainLayout.vue'
+import HeaderSection from '../components/common/HeaderSection.vue'
+import EmptySection from '../components/common/EmptySection.vue'
+import api from '../api/api'
+
 useHead({
   title: 'Vue Kanji | Flashcards'
 })
+
 const jlptLevels = ref([
     { value: '5', label: 'N5 (Beginner)' },
     { value: '4', label: 'N4 (Elementary)' },
@@ -218,6 +213,7 @@ const currentIndex = ref(0)
 const isFlipped = ref(false)
 const loading = ref(false)
 const error = ref(null)
+const kanjiStore = useKanjiStore()  
 
 const currentKanji = computed(() => {
     if (kanjiList.value.length === 0) return null
@@ -239,17 +235,12 @@ const fetchKanjiList = async () => {
     error.value = null
 
     try {
-        const response = await fetch(`https://kanjiapi.dev/v1/kanji/jlpt-${selectedLevel.value}`)
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch kanji list: ${response.status} ${response.statusText}`)
-        }
-
-        kanjiList.value = await response.json()
-
+        const response = await api.get(`/kanji/jlpt-${selectedLevel.value}`)
+        kanjiList.value = response.data
         await fetchKanjiDetails()
     } catch (err) {
         error.value = err.message
+        toast.error(`Error fetching kanji list`)
         console.error('Error fetching kanji list:', err)
     } finally {
         loading.value = false
@@ -277,14 +268,8 @@ const fetchKanjiDetails = async () => {
 
 const fetchSingleKanjiDetail = async (character) => {
     try {
-        const response = await fetch(`https://kanjiapi.dev/v1/kanji/${encodeURIComponent(character)}`)
-
-        if (!response.ok) {
-            console.warn(`Failed to fetch details for ${character}: ${response.status}`)
-            return
-        }
-
-        const data = await response.json()
+        const response = await api.get(`/kanji/${encodeURIComponent(character)}`)
+        const data =  response.data
         kanjiDetails.value = {
             ...kanjiDetails.value,
             [character]: data
