@@ -10,7 +10,7 @@ Vue-Kanji ini kamus kanji minimal, built pake Vue 3 + Vite. Lo bisa browse kanji
 - Vue 3 (script setup, Composition API)
 - Vite (build & dev)
 - Tailwind CSS (styling)
-- Deployed via Vercel (zero-config, auto CI/CD) :contentReference[oaicite:0]{index=0}
+- Deployed via Vercel
 
 ## Instalasi & setup dev
 ```bash
