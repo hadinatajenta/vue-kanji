@@ -207,6 +207,11 @@ import { ref, computed, onMounted } from 'vue'
 import MainLayout from '../components/layouts/MainLayout.vue'
 import SearchSection from '../components/common/SearchSection.vue'
 import EmptySection from '../components/common/EmptySection.vue'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'Vue Kanji | Kanji Dictionary'
+})
 
 const searchQuery = ref('')
 const kanjiData = ref(null)

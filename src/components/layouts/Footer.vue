@@ -49,22 +49,6 @@
                     </ul>
                 </div>
 
-                <!-- Newsletter -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Stay Updated</h3>
-                    <p class="text-gray-400 text-sm mb-4">
-                        Subscribe to our newsletter for learning tips and updates.
-                    </p>
-                    <form @submit.prevent="subscribeNewsletter" class="space-y-2">
-                        <input type="email" v-model="email" placeholder="Your email address" required
-                            class="w-full px-4 py-2 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 border border-gray-700"
-                            aria-label="Email address for newsletter subscription" />
-                        <button type="submit"
-                            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                            Subscribe
-                        </button>
-                    </form>
-                </div>
             </div>
 
             <!-- Bottom bar -->
@@ -115,14 +99,11 @@ const quickLinks = [
 ]
 
 const resources = [
-    { name: 'Kanji Dictionary', url: '/kanji-dictionary' },
-    { name: 'Learning Blog', url: '#' },
-    { name: 'Study Guides', url: '#' },
-    { name: 'Practice Sheets', url: '#' },
+    { name: 'Kanji API', url: 'https://kanjiapi.dev/v1/' },
 ]
 
 const legalLinks = [
-    { name: 'Privacy Policy', url: '#' },
+    { name: 'About', url: '/about' },
     { name: 'Terms of Service', url: '#' },
     { name: 'Cookie Policy', url: '#' },
 ]

@@ -5,6 +5,7 @@ import FlashCard from "../views/FlashCard.vue";
 import KanjiDictionary from "../views/KanjiDictionary.vue";
 import ReadingExplorer from "../views/ReadingExplorer.vue";
 import LearnPage from "../views/LearnPage.vue";
+import About from "../views/About.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -17,11 +18,6 @@ const router = createRouter({
             path: '/learn',
             name: 'Learn',
             component: LearnPage
-        },
-        {
-            path: '/kanji',
-            name: 'KanjiDetail',
-            component: KanjiDetail
         },
         {
             path: '/flashcard',
@@ -37,6 +33,11 @@ const router = createRouter({
             path: '/reading-explorer',
             name: 'ReadingExplorer',
             component: ReadingExplorer
+        },
+        {
+            path: '/about',
+            name: 'About',
+            component: About
         },
     ]
 })

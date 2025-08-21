@@ -24,7 +24,6 @@
                     </div>
                 </div>
 
-                <!-- Loading State -->
                 <div v-if="loading" class="text-center py-12">
                     <div class="inline-flex items-center">
                         <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-red-600" xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +38,6 @@
                     </div>
                 </div>
 
-                <!-- Error State -->
                 <div v-if="error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded"
                     role="alert">
                     <p class="font-bold">Error</p>
@@ -50,9 +48,7 @@
                     </button>
                 </div>
 
-                <!-- Flashcard Content -->
                 <div v-if="!loading && currentKanji" class="max-w-2xl mx-auto">
-                    <!-- Progress Bar -->
                     <div class="mb-6">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-gray-700">Progress</span>
@@ -64,13 +60,11 @@
                         </div>
                     </div>
 
-                    <!-- Flashcard -->
                     <div class="flashcard relative w-full h-64 md:h-80 cursor-pointer mb-8 mx-auto" @click="flipCard"
                         @keydown.space.prevent="flipCard" tabindex="0"
                         :aria-label="isFlipped ? 'Flashcard showing details' : 'Flashcard showing kanji character'">
                         <div class="flashcard-inner w-full h-full transition-transform duration-500"
                             :class="{ 'is-flipped': isFlipped }">
-                            <!-- Front of card -->
                             <div
                                 class="flashcard-front absolute w-full h-full backface-hidden bg-white rounded-xl shadow-lg p-6 flex items-center justify-center border-2 border-red-200">
                                 <div class="text-7xl md:text-8xl font-bold text-red-700">{{ currentKanji.kanji || "" }}
@@ -78,7 +72,6 @@
                                 <div class="absolute bottom-4 right-4 text-sm text-gray-500">Click to flip</div>
                             </div>
 
-                            <!-- Back of card -->
                             <div
                                 class="flashcard-back absolute w-full h-full backface-hidden bg-white rounded-xl shadow-lg p-6 border-2 border-red-200 transform rotate-y-180 overflow-y-auto">
                                 <div class="h-full flex flex-col">
@@ -138,7 +131,6 @@
                         </div>
                     </div>
 
-                    <!-- Navigation Controls -->
                     <div
                         class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
                         <button @click="prevCard" :disabled="currentIndex === 0"
@@ -160,7 +152,6 @@
                         </button>
                     </div>
 
-                    <!-- Study Mode Options -->
                     <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
                         <h2 class="text-xl font-semibold text-gray-800 mb-4">Study Options</h2>
                         <div class="flex flex-wrap gap-4 justify-center">
@@ -210,7 +201,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import MainLayout from '../components/layouts/MainLayout.vue'
 import { useHead } from '@vueuse/head'
 useHead({
-  title: 'Kanji Dev | Flashcards'
+  title: 'Vue Kanji | Flashcards'
 })
 const jlptLevels = ref([
     { value: '5', label: 'N5 (Beginner)' },

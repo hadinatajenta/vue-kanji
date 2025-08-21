@@ -210,6 +210,11 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import MainLayout from '../components/layouts/MainLayout.vue'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'Vue Kanji | Learn'
+})
 
 // Learning modes
 const learningModes = ref([

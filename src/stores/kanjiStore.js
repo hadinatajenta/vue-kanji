@@ -43,7 +43,7 @@ export const useKanjiStore = defineStore('kanji', () => {
     function addHistory(char) {
         if (!history.value.includes(char)) {
             history.value.unshift(char)
-            history.value = history.value.slice(0, 10) // limit 10 terakhir
+            history.value = history.value.slice(0, 10) 
             localStorage.setItem('searchHistory', JSON.stringify(history.value))
         }
     }

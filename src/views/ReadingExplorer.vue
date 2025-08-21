@@ -182,6 +182,11 @@ import { ref, computed, onMounted } from 'vue'
 import MainLayout from '../components/layouts/MainLayout.vue'
 import EmptySection from '../components/common/EmptySection.vue'
 import SearchSection from '../components/common/SearchSection.vue'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'Vue Kanji | Kanji Reading'
+})
 
 const readingQuery = ref('')
 const readingData = ref(null)
