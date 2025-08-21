@@ -32,7 +32,7 @@
                             <span class="text-sm">JLPT {{ level }}</span>
                         </li>
                     </ul>
-                    <router-link to="/jlpt-levels"
+                    <router-link to="/learn"
                         class="inline-flex items-center text-red-700 font-medium hover:text-red-800 transition-colors group-hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
                         aria-label="Explore JLPT levels">
                         Explore levels
@@ -95,7 +95,7 @@
                         class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-200 transition-colors">
                         <span class="text-2xl text-red-700 font-bold">語</span>
                     </div>
-                    <h3 id="feature-vocab" class="text-xl font-semibold text-gray-900 mb-3">Vocabulary Examples</h3>
+                    <h3 id="feature-vocab" class="text-xl font-semibold text-gray-900 mb-3">Dictionary Examples</h3>
                     <p class="text-gray-600 mb-4">
                         See real-world vocabulary examples for each kanji with readings and translations.
                     </p>
@@ -110,10 +110,10 @@
                             <div class="text-sm text-gray-600 mt-1">{{ example.meaning }}</div>
                         </div>
                     </div>
-                    <router-link to="/vocabulary"
+                    <router-link to="/kanji-dictionary"
                         class="inline-flex items-center text-red-700 font-medium hover:text-red-800 transition-colors group-hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
                         aria-label="Explore vocabulary examples">
-                        Expand vocabulary
+                        Expand Dictionary
                         <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform"
                             fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd"

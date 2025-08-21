@@ -99,6 +99,7 @@ const InstagramIcon = {
 
 const email = ref('')
 
+defineExpose({ FacebookIcon, TwitterIcon, InstagramIcon })
 const socialLinks = [
     { name: 'Facebook', url: '#', icon: FacebookIcon },
     { name: 'Twitter', url: '#', icon: TwitterIcon },
@@ -107,10 +108,10 @@ const socialLinks = [
 
 const quickLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About Us', path: '/about' },
-    { name: 'Courses', path: '/courses' },
-    { name: 'Pricing', path: '/pricing' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Learn', path: '/learn' },
+    { name: 'Flashcard', path: '/flashcard' },
+    { name: 'Dictionary', path: '/kanji-dictionary' },
+    { name: 'Reading Explorer', path: '/reading-explorer' },
 ]
 
 const resources = [
