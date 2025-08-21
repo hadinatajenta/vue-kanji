@@ -2,39 +2,17 @@
     <MainLayout>
         <div class="min-h-screen bg-gradient-to-br from-red-50 to-red-100 py-8">
             <div class="container mx-auto px-4">
-                <!-- Header Section -->
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Reading Explorer</h1>
-                    <p class="text-lg text-gray-700">Discover kanji characters by their readings</p>
-                </div>
+                <HeaderSection title="Reading Section" subtitle="Discover kanji characters by their readings" />
 
-                <!-- Search Section -->
-                <SearchSection v-model="readingQuery" :quick-suggestions="quickSuggestions"
+                <SearchSection v-model="kanaQuery" :quick-suggestions="quickSuggestions" 
                     placeholder="Enter a reading in hiragana or katakana (e.g. みず, カ, しょう)"
                     aria-label="Enter a reading in hiragana or katakana" button-text="Search Reading"
-                    @search="searchReading" @suggestion-selected="setSuggestion" />
+                    @search="searchReading" @suggestion-selected="setSuggestion" 
+                />
 
-                <!-- Loading State -->
-                <div v-if="loading" class="text-center py-12">
-                    <div class="inline-flex items-center">
-                        <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-red-600" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                        </svg>
-                        <span class="text-lg text-gray-700">Searching for readings...</span>
-                    </div>
-                </div>
-
-                <!-- Error State -->
-                <div v-if="error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded"
-                    role="alert">
-                    <p class="font-bold">Error</p>
-                    <p>{{ error }}</p>
-                </div>
+                <!-- Loading & Error -->
+                <Loader :show="loading" message="Searching for readings..." />
+                <ErrorAlert :error="error " />
 
                 <!-- Results Section -->
                 <div v-if="readingData" class="mb-8">
@@ -83,10 +61,6 @@
                                             <span v-if="kanji.stroke_count">{{ kanji.stroke_count }} strokes</span>
                                         </div>
 
-                                        <router-link :to="`/dictionary?search=${kanji.character}`"
-                                            class="inline-block bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded text-sm transition-colors focus:outline-none focus:ring-1 focus:ring-red-500">
-                                            View Details
-                                        </router-link>
                                     </div>
                                 </div>
                             </div>
@@ -178,12 +152,17 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import MainLayout from '../components/layouts/MainLayout.vue'
 import EmptySection from '../components/common/EmptySection.vue'
 import SearchSection from '../components/common/SearchSection.vue'
 import { useHead } from '@vueuse/head'
-
+import HeaderSection from '../components/common/HeaderSection.vue'
+import Loader from '../components/common/Loader.vue'
+import ErrorAlert from '../components/common/ErrorAlert.vue'
+import * as wanakana from 'wanakana'
+import api from '../api/api'
+import { toast } from 'vue3-toastify'
 useHead({
   title: 'Vue Kanji | Kanji Reading'
 })
@@ -193,6 +172,11 @@ const readingData = ref(null)
 const kanjiDetails = ref({})
 const loading = ref(false)
 const error = ref(null)
+
+const kanaQuery = computed({
+  get: () => wanakana.toKana(readingQuery.value, { IMEMode: true }),
+  set: (val) => { readingQuery.value = val }
+})
 
 const quickSuggestions = ref(['みず', 'カ', 'しょう', 'あめ', 'き', 'はな'])
 
@@ -230,20 +214,17 @@ const searchReading = async () => {
     error.value = null
     readingData.value = null
     kanjiDetails.value = {}
+    const kana = wanakana.toKana(readingQuery.value, { IMEMode: false })
 
     try {
-        const response = await fetch(`https://kanjiapi.dev/v1/reading/${encodeURIComponent(readingQuery.value.trim())}`)
-
-        if (!response.ok) {
-            throw new Error(`Reading not found: ${response.status} ${response.statusText}`)
-        }
-
-        const data = await response.json()
+        const response = await api.get(`/reading/${encodeURIComponent(kana)}`)
+        const data =  response.data
         readingData.value = data
 
         await fetchKanjiDetails([...data.main_kanji, ...data.name_kanji])
     } catch (err) {
         error.value = err.message
+        toast.error(`Error fetching kana!`)
         console.error('Error fetching reading:', err)
     } finally {
         loading.value = false
@@ -257,19 +238,15 @@ const fetchKanjiDetails = async (kanjiList) => {
         if (kanjiDetails.value[character]) return 
 
         try {
-            const response = await fetch(`https://kanjiapi.dev/v1/kanji/${encodeURIComponent(character)}`)
+            const response = await api.get(`/kanji/${encodeURIComponent(character)}`)
 
-            if (!response.ok) {
-                console.warn(`Failed to fetch details for ${character}: ${response.status}`)
-                return
-            }
-
-            const data = await response.json()
+            const data =  response.data
             kanjiDetails.value = {
                 ...kanjiDetails.value,
                 [character]: data
             }
         } catch (err) {
+            toast.error(`Error fetch detail kanji!`)
             console.error(`Error fetching details for ${character}:`, err)
         }
     })
@@ -290,8 +267,6 @@ const detectReadingType = (reading) => {
     }
 }
 
-// onMounted(() => {
-// })
 </script>
 
 <style scoped>
