@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "../views/LandingPage.vue";
-import KanjiDetail from "../views/KanjiDetail.vue";
 import FlashCard from "../views/FlashCard.vue";
 import KanjiDictionary from "../views/KanjiDictionary.vue";
 import ReadingExplorer from "../views/ReadingExplorer.vue";
