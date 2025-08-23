@@ -188,7 +188,6 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useHead } from '@vueuse/head'
 import { toast } from "vue3-toastify"
-import { useKanjiStore } from '../stores/kanji'
 import MainLayout from '../components/layouts/MainLayout.vue'
 import HeaderSection from '../components/common/HeaderSection.vue'
 import EmptySection from '../components/common/EmptySection.vue'
@@ -213,7 +212,6 @@ const currentIndex = ref(0)
 const isFlipped = ref(false)
 const loading = ref(false)
 const error = ref(null)
-const kanjiStore = useKanjiStore()  
 
 const currentKanji = computed(() => {
     if (kanjiList.value.length === 0) return null
