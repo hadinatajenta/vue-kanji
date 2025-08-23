@@ -1,5 +1,20 @@
-# Vue 3 + Vite
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Vue-Kanji (Vue kamus kanji)
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+Live demo: https://vue-kanji.vercel.app/
+
+## Ringkasan
+Vue-Kanji ini kamus kanji minimal, built pake Vue 3 + Vite. Lo bisa browse kanji, liat arti atau bacanya (Kana), all in handy.
+
+## Teknologi
+- Vue 3 (script setup, Composition API)
+- Vite (build & dev)
+- Tailwind CSS (styling)
+- Deployed via Vercel
+
+## Instalasi & setup dev
+```bash
+git clone https://github.com/hadinatajenta/vue-kanji.git
+cd vue-kanji
+npm install
+npm run dev
