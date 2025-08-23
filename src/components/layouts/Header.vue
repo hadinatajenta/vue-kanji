@@ -63,7 +63,7 @@ const isMobileMenuOpen = ref(false)
 
 const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'Learn', path: '/learn' },
+    { name: 'Kanji Learn', path: '/learn' },
     { name: 'Flashcard', path: '/flashcard' },
     { name: 'Dictionary', path: '/kanji-dictionary' },
     { name: 'Reading Explorer', path: '/reading-explorer' },
