@@ -55,14 +55,14 @@
                         </div>
                     </div>
 
-                    <div class="flashcard relative w-full h-64 md:h-100 cursor-pointer mb-8 mx-auto" @click="flipCard"
+                    <div class="flashcard relative w-full h-96 md:h-100 cursor-pointer mb-8 mx-auto" @click="flipCard"
                         @keydown.space.prevent="flipCard" tabindex="0"
                         :aria-label="isFlipped ? 'Flashcard showing details' : 'Flashcard showing kanji character'">
                         <div class="flashcard-inner w-full h-full transition-transform duration-500"
                             :class="{ 'is-flipped': isFlipped }">
                             <div
                                 class="flashcard-front absolute w-full h-full backface-hidden bg-white rounded-xl shadow-lg p-6 flex items-center justify-center border-2 border-red-200">
-                                <div class="text-7xl md:text-8xl font-bold text-red-700">{{ currentKanji.kanji || "" }}
+                                <div class="text-8xl font-bold text-red-700">{{ currentKanji.kanji || "" }}
                                 </div>
                                 <div class="absolute bottom-4 right-4 text-sm text-gray-500">Click to flip</div>
                             </div>
@@ -79,43 +79,41 @@
                                     <div class="grid grid-cols-2 gap-4 mb-4">
                                         <div>
                                             <h3
-                                                class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                                                class="text-sm font-semibold text-red-500 uppercase tracking-wider mb-1">
                                                 Onyomi</h3>
                                             <p class="text-lg font-medium text-gray-900">{{
                                                 currentKanji.on_readings.join('、') || '—' }}</p>
                                         </div>
                                         <div>
                                             <h3
-                                                class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                                                class="text-sm font-semibold text-red-500 uppercase tracking-wider mb-1">
                                                 Kunyomi</h3>
                                             <p class="text-lg font-medium text-gray-900">{{
                                                 currentKanji.kun_readings.join('、') || '—' }}</p>
                                         </div>
                                         <div>
                                             <h3
-                                                class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                                                class="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-1">
                                                 Strokes</h3>
                                             <p class="text-lg font-medium text-gray-900">{{ currentKanji.stroke_count }}
                                             </p>
                                         </div>
                                         <div>
                                             <h3
-                                                class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                                                class="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-1">
                                                 JLPT</h3>
                                             <p class="text-lg font-medium text-gray-900">N{{ currentKanji.jlpt || '—' }}
                                             </p>
                                         </div>
                                     </div>
-
                                     <div v-if="currentKanji.name_readings && currentKanji.name_readings.length"
-                                        class="mb-4">
+                                        class="mb-4 border-t border-gray-200">
                                         <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
                                             Name Readings</h3>
                                         <p class="text-lg font-medium text-gray-900">{{
                                             currentKanji.name_readings?.join('、') }}</p>
                                     </div>
 
-                                    {{ currentKanji.character || '-' }}
 
                                     <div class="mt-auto pt-4 border-t border-gray-200">
                                         <p class="text-sm text-gray-500 text-center">Click anywhere to flip back</p>
