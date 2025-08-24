@@ -76,7 +76,7 @@
                                         <div class="text-lg text-gray-700 font-medium">{{ currentKanji.meanings.join(', ') }}</div>
                                     </div>
 
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="grid grid-cols-2 gap-4 mb-4">
                                         <div>
                                             <h3
                                                 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
@@ -127,7 +127,7 @@
                     </div>
 
                     <div
-                        class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        class="grid grid-cols-3 gap-4 sm:flex-row sm:justify-center sm:items-center  sm:space-y-0 sm:space-x-4">
                         <button @click="prevCard" :disabled="currentIndex === 0"
                             class="w-full sm:w-auto bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-6 rounded-lg shadow-md border border-gray-300 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500"
                             aria-label="Previous card">
@@ -284,7 +284,6 @@ const flipCard = () => {
 const nextCard = () => {
     if (currentIndex.value < kanjiList.value.length - 1) {
         currentIndex.value++
-        isFlipped.value = false
 
         const nextCharacter = kanjiList.value[currentIndex.value + 1]
         if (nextCharacter && !kanjiDetails.value[nextCharacter]) {
@@ -296,7 +295,6 @@ const nextCard = () => {
 const prevCard = () => {
     if (currentIndex.value > 0) {
         currentIndex.value--
-        isFlipped.value = false
     }
 }
 
