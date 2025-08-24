@@ -127,16 +127,12 @@
 
                             <div class="grid grid-cols-2 gap-4 mb-6">
                                 <div>
-                                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
-                                        On'yomi</h4>
-                                    <p class="text-lg font-medium">{{ kanjiDetails[selectedKanji].on_readings.join('、')
-                                        || '—' }}</p>
+                                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">On'yomi</h4>
+                                    <p class="text-lg font-medium">{{ readingsWithRomaji(kanjiDetails[selectedKanji].on_readings).join('、') }}</p>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
-                                        Kun'yomi</h4>
-                                    <p class="text-lg font-medium">{{ kanjiDetails[selectedKanji].kun_readings.join('、')
-                                        || '—' }}</p>
+                                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Kun'yomi</h4>
+                                    <p class="text-lg font-medium">{{ readingsWithRomaji(kanjiDetails[selectedKanji].kun_readings).join('、') }}</p>
                                 </div>
                                 <div>
                                     <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
@@ -146,22 +142,21 @@
                                 <div>
                                     <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">JLPT
                                     </h4>
-                                    <p class="text-lg font-medium">{{ kanjiDetails[selectedKanji].jlpt ?
-                                        `N${kanjiDetails[selectedKanji].jlpt}` : '—' }}</p>
+                                    <p class="text-lg font-medium">{{ kanjiDetails[selectedKanji].jlpt ? `N${kanjiDetails[selectedKanji].jlpt}` : '—' }}</p>
                                 </div>
                             </div>
 
                             <div class="flex justify-center space-x-4 mt-6">
                                 <button @click="setProgressStatus(selectedKanji, 'not-learned')"
-                                    class="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400">
+                                    class="px-4 py-2 font-bold bg-neutral-600 text-neutral-100 rounded-lg hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400">
                                     Mark as New
                                 </button>
                                 <button @click="setProgressStatus(selectedKanji, 'learning')"
-                                    class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg hover:bg-yellow-200 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                                    class="px-4 py-2 font-bold bg-amber-600 text-amber-100 rounded-lg hover:bg-yellow-200 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400">
                                     Learning
                                 </button>
                                 <button @click="setProgressStatus(selectedKanji, 'learned')"
-                                    class="px-4 py-2 bg-green-100 text-green-800 rounded-lg hover:bg-green-200 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400">
+                                    class="px-4 py-2 font-bold bg-teal-600 text-teal-100 rounded-lg hover:bg-green-200 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400">
                                     Learned
                                 </button>
                             </div>
@@ -192,6 +187,7 @@ import { useHead } from '@vueuse/head'
 import HeaderSection from '../components/common/HeaderSection.vue'
 import Loader from '../components/common/Loader.vue'
 import ErrorAlert from '../components/common/ErrorAlert.vue'
+import * as wanakana from 'wanakana'
 
 useHead({
   title: 'Vue Kanji | Learn'
@@ -315,6 +311,11 @@ const setProgressStatus = (kanji, status) => {
     progress.value[kanji] = status
     saveProgress()
     selectedKanji.value = null
+}
+
+function readingsWithRomaji(readings) {
+  if (!readings || readings.length === 0) return ['—']
+  return readings.map(r => `${r} (${wanakana.toRomaji(r)})`)
 }
 
 onMounted(() => {

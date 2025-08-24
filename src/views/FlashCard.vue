@@ -77,19 +77,17 @@
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-4 mb-4">
-                                        <div>
+                                        <div class="border-r-2 border-red-500">
                                             <h3
                                                 class="text-sm font-semibold text-red-500 uppercase tracking-wider mb-1">
                                                 Onyomi</h3>
-                                            <p class="text-lg font-medium text-gray-900">{{
-                                                currentKanji.on_readings.join('、') || '—' }}</p>
+                                            <p class="text-lg font-medium text-gray-900">    {{ readingsWithRomaji(currentKanji.on_readings).join('、') }}</p>
                                         </div>
                                         <div>
                                             <h3
                                                 class="text-sm font-semibold text-red-500 uppercase tracking-wider mb-1">
                                                 Kunyomi</h3>
-                                            <p class="text-lg font-medium text-gray-900">{{
-                                                currentKanji.kun_readings.join('、') || '—' }}</p>
+                                            <p class="text-lg font-medium text-gray-900">{{ readingsWithRomaji(currentKanji.kun_readings).join('、') }}</p>
                                         </div>
                                         <div>
                                             <h3
@@ -108,10 +106,8 @@
                                     </div>
                                     <div v-if="currentKanji.name_readings && currentKanji.name_readings.length"
                                         class="mb-4 border-t border-gray-200">
-                                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
-                                            Name Readings</h3>
-                                        <p class="text-lg font-medium text-gray-900">{{
-                                            currentKanji.name_readings?.join('、') }}</p>
+                                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Name Readings</h3>
+                                        <p class="text-lg font-medium text-gray-900">{{ readingsWithRomaji(currentKanji.name_readings)?.join('、') }}</p>
                                     </div>
 
 
@@ -190,6 +186,7 @@ import MainLayout from '../components/layouts/MainLayout.vue'
 import HeaderSection from '../components/common/HeaderSection.vue'
 import EmptySection from '../components/common/EmptySection.vue'
 import api from '../api/api'
+import * as wanakana from 'wanakana'
 
 useHead({
   title: 'Vue Kanji | Flashcards'
@@ -309,6 +306,11 @@ const shuffleCards = () => {
 const resetToFirst = () => {
     currentIndex.value = 0
     isFlipped.value = false
+}
+
+function readingsWithRomaji(readings) {
+  if (!readings || readings.length === 0) return ['—']
+  return readings.map(r => `${r} (${wanakana.toRomaji(r)})`)
 }
 
 const handleKeydown = (e) => {
