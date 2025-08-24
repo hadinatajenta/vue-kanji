@@ -55,7 +55,7 @@
                         </div>
                     </div>
 
-                    <div class="flashcard relative w-full h-64 md:h-80 cursor-pointer mb-8 mx-auto" @click="flipCard"
+                    <div class="flashcard relative w-full h-64 md:h-100 cursor-pointer mb-8 mx-auto" @click="flipCard"
                         @keydown.space.prevent="flipCard" tabindex="0"
                         :aria-label="isFlipped ? 'Flashcard showing details' : 'Flashcard showing kanji character'">
                         <div class="flashcard-inner w-full h-full transition-transform duration-500"

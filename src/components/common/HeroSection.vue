@@ -30,11 +30,11 @@
                             Start Learning Now
                         </router-link>
 
-                        <button @click="scrollToFeatures"
+                        <router-link to="/how-it-works"
                             class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-8 rounded-lg shadow-md border border-gray-200 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50 text-lg"
                             aria-label="Discover how it works">
                             How It Works
-                        </button>
+                        </router-link>
                     </div>
 
                     <!-- Stats -->

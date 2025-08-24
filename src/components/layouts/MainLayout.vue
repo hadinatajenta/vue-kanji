@@ -2,13 +2,13 @@
     <div class="min-h-screen flex flex-col bg-gray-50">
         <Header />
 
-        <main class="flex-grow">
+        <main class="flex-grow pb-16 md:pb-0">
             <slot></slot>
         </main>
 
         <Footer />
 
-        <a href="" class="skip-link focus:not-sr-only sr-only" aria-label="Skip to main content">
+        <a href="#main-content" class="skip-link focus:not-sr-only sr-only" aria-label="Skip to main content">
             Skip to main content
         </a>
     </div>
