@@ -2,7 +2,8 @@
     <MainLayout>
         <div class="min-h-screen bg-gradient-to-br from-red-50 to-red-100 py-8">
             <div class="container mx-auto px-4">
-                <HeaderSection title="Kanji Flashcard" subtitle="Practice and master Japanese kanji with interactive flashcards" />
+                <HeaderSection title="Kanji Flashcard"
+                    subtitle="Practice and master Japanese kanji with interactive flashcards" />
 
                 <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Select JLPT Level</h2>
@@ -47,7 +48,8 @@
                     <div class="mb-6">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-gray-700">Progress</span>
-                            <span class="text-sm font-medium text-gray-700">{{ currentIndex + 1 }} / {{ kanjiList.length}}</span>
+                            <span class="text-sm font-medium text-gray-700">{{ currentIndex + 1 }} / {{
+                                kanjiList.length}}</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5">
                             <div class="bg-red-600 h-2.5 rounded-full transition-all duration-300"
@@ -73,7 +75,8 @@
                                     <div class="text-center mb-4">
                                         <div class="text-6xl font-bold text-red-700 mb-2">{{ currentKanji.character }}
                                         </div>
-                                        <div class="text-lg text-gray-700 font-medium">{{ currentKanji.meanings.join(', ') }}</div>
+                                        <div class="text-lg text-gray-700 font-medium">{{
+                                            currentKanji.meanings.join(',') }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-4 mb-4">
@@ -81,13 +84,23 @@
                                             <h3
                                                 class="text-sm font-semibold text-red-500 uppercase tracking-wider mb-1">
                                                 Onyomi</h3>
-                                            <p class="text-lg font-medium text-gray-900">    {{ readingsWithRomaji(currentKanji.on_readings).join('、') }}</p>
+                                            <ul
+                                                class="list-disc list-inside space-y-1 text-lg font-medium text-gray-900">
+                                                <li v-for="r in readingsWithRomaji(currentKanji.on_readings)" :key="r">
+                                                    {{ r }}
+                                                </li>
+                                            </ul>
                                         </div>
                                         <div>
                                             <h3
                                                 class="text-sm font-semibold text-red-500 uppercase tracking-wider mb-1">
                                                 Kunyomi</h3>
-                                            <p class="text-lg font-medium text-gray-900">{{ readingsWithRomaji(currentKanji.kun_readings).join('、') }}</p>
+                                            <ul
+                                                class="list-disc list-inside space-y-1 text-lg font-medium text-gray-900">
+                                                <li v-for="r in readingsWithRomaji(currentKanji.kun_readings)" :key="r">
+                                                    {{ r }}
+                                                </li>
+                                            </ul>
                                         </div>
                                         <div>
                                             <h3
@@ -106,15 +119,20 @@
                                     </div>
                                     <div v-if="currentKanji.name_readings && currentKanji.name_readings.length"
                                         class="mb-4 border-t border-gray-200">
-                                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Name Readings</h3>
-                                        <p class="text-lg font-medium text-gray-900">{{ readingsWithRomaji(currentKanji.name_readings)?.join('、') }}</p>
-                                    </div>
+                                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                                            Name Readings</h3>
+                                        <div class="flex flex-wrap gap-2 text-lg font-medium text-gray-900">
+                                            <span v-for="r in readingsWithRomaji(currentKanji.name_readings)" :key="r"
+                                                class="px-2 py-1 bg-gray-100 rounded">
+                                                {{ r }}
+                                            </span>
+                                        </div>
 
+                                    </div>
 
                                     <div class="mt-auto pt-4 border-t border-gray-200">
                                         <p class="text-sm text-gray-500 text-center">Click anywhere to flip back</p>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -167,12 +185,9 @@
                     </div>
                 </div>
 
-                <EmptySection
-                    v-if="!loading && kanjiList.length === 0 && !error"
-                    title="Select a JLPT Level"
+                <EmptySection v-if="!loading && kanjiList.length === 0 && !error" title="Select a JLPT Level"
                     description="Choose a JLPT level from above to start studying kanji flashcards"
-                    :quick-suggestions="jlptLevels.map(l => l.value)"
-                />
+                    :quick-suggestions="jlptLevels.map(l => l.value)" />
             </div>
         </div>
     </MainLayout>
