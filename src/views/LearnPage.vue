@@ -316,6 +316,7 @@ const getProgressStatus = (kanji) => {
 const setProgressStatus = (kanji, status) => {
     progress.value[kanji] = status
     saveProgress()
+    selectedKanji.value = null
 }
 
 // Initialize
