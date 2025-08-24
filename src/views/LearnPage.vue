@@ -223,7 +223,6 @@ const learnedCount = computed(() => {
     return kanjiList.value.filter(kanji => getProgressStatus(kanji) === 'learned').length
 })
 
-// Methods
 const selectMode = (mode) => {
     activeMode.value = mode
     if (mode === 'joyo') {
@@ -297,7 +296,6 @@ const openKanjiDetails = async (kanji) => {
     await fetchKanjiDetails(kanji)
 }
 
-// Progress tracking methods
 const loadProgress = () => {
     const savedProgress = localStorage.getItem('kanjiProgress')
     if (savedProgress) {
@@ -319,19 +317,16 @@ const setProgressStatus = (kanji, status) => {
     selectedKanji.value = null
 }
 
-// Initialize
 onMounted(() => {
     loadProgress()
 })
 
-// Watch for mode/level changes
 watch([activeMode, activeLevel], () => {
     if (activeMode.value !== 'joyo') {
         fetchKanjiList()
     }
 })
 
-// Initial fetch
 fetchKanjiList()
 </script>
 
